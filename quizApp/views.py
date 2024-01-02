@@ -1,5 +1,9 @@
 from django.shortcuts import render, redirect
 from .models import *
+from django.core.mail import send_mail
+from django.conf import settings
+from random import randint
+from django.db import IntegrityError
 
 # Create your views here.
 default_data = {}
@@ -10,6 +14,34 @@ profile_page_link = 'quiz_manage/profile_page.html'
 otp_page_link = 'quiz_manage/otp_page.html'
 forgot_pwd_page_link = 'quiz_manage/forgot_pwd.html'
 
+# EMAIL FUNCTION
+def send_otp(request):
+    otp = randint(100000, 999999)
+    request.session['otp'] = otp
+
+    send_to = [request.session['reg_data']['email']]
+    send_from = settings.EMAIL_HOST_USER
+    subject = 'Login Attempt'
+    messages = f'Hello! Someone entered your account. OTP is: {otp}'
+
+    print(otp)
+    print("done")
+
+    send_mail(subject, messages, send_from, send_to)
+
+# EMAIL VErification
+def verify_otp(request):
+    if int(request.POST['otp']) == request.session['otp']:
+        master = Master.objects.create(Email=request.session['reg_data']['email'], Password=request.session['reg_data']['pwd'])
+        UserProfile.objects.create(Master=master)
+        print("Account Created Successfully")
+        return redirect(login_page)
+    else:
+        print("Invalid OTP.")
+
+    return redirect(otp_page_link)
+
+
 ### START: VIEWS FOR PAGES ONLY ###
 # login page
 def login_page(request):
@@ -18,6 +50,10 @@ def login_page(request):
 # register page
 def register_page(request):
     return render(request, register_page_link)
+
+# OTP PAGE
+def otp_page(request):
+    return render(request, otp_page_link)
 
 # profile page
 def profile_page(request):
@@ -40,8 +76,17 @@ def forgot_pwd(request):
 ### START: REGISTRATION_FUNCTIONALITY ###
 
 def registration(request):
-    master = Master.objects.create(Email = request.POST['email'], Password = request.POST['password'])
-    UserProfile.objects.create(Master = master)
+    try:
+        master = Master.objects.get(Email=request.POST['email'])
+        print("Account Exist. Login")
+    except Master.DoesNotExist as err:
+        print(err)
+        print("Account Not Found")
+
+        request.session['reg_data'] = {'email': request.POST['email'], 'pwd': request.POST['password']}
+        send_otp(request)
+        return redirect(otp_page)
+
     return redirect(login_page)
 
 ### END: REGISTRATION_FUNCTIONALITY ###
@@ -54,6 +99,7 @@ def login(request):
         if master.Password == request.POST['password']:
             request.session['email'] = master.Email
 
+            send_otp(request)
             return redirect(profile_page)
         else:
             print("Incorrect Password")

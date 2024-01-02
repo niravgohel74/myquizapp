@@ -15,7 +15,7 @@ class UserProfile(models.Model):
     Master = models.ForeignKey(Master, on_delete = models.CASCADE)
     FullName = models.CharField(max_length=25, null=True, default='')
     Mobile = models.CharField(max_length=10, null=True, default='')
-    Gender = models.CharField(max_length=2, choices=gender_choices, null=True)
+    Gender = models.CharField(choices=gender_choices, max_length=2, default='')
     BirthDate = models.DateField(auto_created=True, default='1990-01-01')
     City = models.CharField(max_length=30, null=True, default='')
     State = models.CharField(max_length=25, null=True, default='')

@@ -133,7 +133,7 @@ def upload_profile_image(request):
     image_name = request.FILES['profile_image'].name
     img_ext = image_name.split('.')[-1]
 
-    image_new_name = f"{master.Email.split('@')[0]}_{user.Mobile}.{img_ext}"
+    image_new_name = f"{master.Email.split('@')[0]}.{img_ext}"
     print(image_new_name)
 
     image = request.FILES['profile_image']

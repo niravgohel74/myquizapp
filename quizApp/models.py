@@ -13,6 +13,7 @@ gender_choices={
 
 class UserProfile(models.Model):
     Master = models.ForeignKey(Master, on_delete = models.CASCADE)
+    ProfileImage = models.FileField(upload_to='profile_images/', default='avatar.png')
     FullName = models.CharField(max_length=25, null=True, default='')
     Mobile = models.CharField(max_length=10, null=True, default='')
     Gender = models.CharField(choices=gender_choices, max_length=2, default='')

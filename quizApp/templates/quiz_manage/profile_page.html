@@ -1089,94 +1089,96 @@
                                         <ul class="nav nav-tabs">
 											<li class="nav-item"><a href="#profile-settings" data-bs-toggle="tab" class="nav-link active show">Profile</a>
 											</li>
-                                            <li class="nav-item"><a href="#my-posts" data-bs-toggle="tab" class="nav-link">Security</a>
+                                            <li class="nav-item"><a href="#security" data-bs-toggle="tab" class="nav-link">Security</a>
                                             </li>
                                             <li class="nav-item"><a href="#about-me" data-bs-toggle="tab" class="nav-link">About Me</a>
                                             </li>
                                         </ul>
                                         <div class="tab-content">
-                                            <div id="my-posts" class="tab-pane fade">
+                                            <div id="security" class="tab-pane fade">
                                                 <div class="my-post-content pt-3">
-                                                    <div class="post-input">
-                                                        
-														
-                                                        
-														
-                                                    </div>
+													<div class="">
+														<h4 class="text-primary mb-3">Security Setting</h4>
+														<form method="post" action="{% url 'change_password' %}">
+															{% csrf_token %}
+															<div class="row">
+																<div class="mb-3 col-md-4">
+																	<label class="form-label">Current Password</label>
+																	<input type="password" name="current_pwd" placeholder="Current Password" class="form-control" value="">
+																</div>
+																<div class="mb-3 col-md-4">
+																	<label class="form-label">New Password</label>
+																	<input type="password" name="new_pwd" placeholder="New Password" class="form-control" value="">
+																</div>
+																<div class="mb-3 col-md-4">
+																	<label class="form-label">Rewrite Password</label>
+																	<input type="password" name="rewrite_pwd" placeholder="Rewrite Password" class="form-control" value="">
+																</div>
+															</div>
+													
+													
+															<button class="btn btn-primary" type="submit">Change</button>
+														</form>
+													
+													</div>
                                                 </div>
                                             </div>
                                             <div id="about-me" class="tab-pane fade">
                                                 <div class="profile-about-me">
                                                     <div class="pt-4 border-bottom-1 pb-3">
                                                         <h4 class="text-primary">About Me</h4>
-                                                        <p class="mb-2">A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence was created for the bliss of souls like mine.I am so happy, my dear friend, so absorbed in the exquisite sense of mere tranquil existence, that I neglect my talents.</p>
-                                                        <p>A collection of textile samples lay spread out on the table - Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame.</p>
+                                                        
                                                     </div>
                                                 </div>
-                                                <div class="profile-skills mb-5">
-                                                    <h4 class="text-primary mb-2">Skills</h4>
-                                                    <a href="javascript:void(0);" class="btn btn-primary light btn-xs mb-1">Admin</a>
-                                                    <a href="javascript:void(0);" class="btn btn-primary light btn-xs mb-1">Dashboard</a>
-                                                    <a href="javascript:void(0);" class="btn btn-primary light btn-xs mb-1">Photoshop</a>
-                                                    <a href="javascript:void(0);" class="btn btn-primary light btn-xs mb-1">Bootstrap</a>
-                                                    <a href="javascript:void(0);" class="btn btn-primary light btn-xs mb-1">Responsive</a>
-                                                    <a href="javascript:void(0);" class="btn btn-primary light btn-xs mb-1">Crypto</a>
-                                                </div>
-                                                <div class="profile-lang  mb-5">
-                                                    <h4 class="text-primary mb-2">Language</h4>
-													<a href="javascript:void(0);" class="text-muted pe-3 f-s-16"><i class="flag-icon flag-icon-us"></i> English</a> 
-													<a href="javascript:void(0);" class="text-muted pe-3 f-s-16"><i class="flag-icon flag-icon-fr"></i> French</a>
-                                                    <a href="javascript:void(0);" class="text-muted pe-3 f-s-16"><i class="flag-icon flag-icon-bd"></i> Bangla</a>
-                                                </div>
-                                                <div class="profile-personal-info">
-                                                    <h4 class="text-primary mb-4">Personal Information</h4>
-                                                    <div class="row mb-2">
-                                                        <div class="col-sm-3 col-5">
-                                                            <h5 class="f-w-500">Name <span class="pull-end">:</span>
-                                                            </h5>
-                                                        </div>
-                                                        <div class="col-sm-9 col-7"><span>Mitchell C.Shay</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row mb-2">
-                                                        <div class="col-sm-3 col-5">
-                                                            <h5 class="f-w-500">Email<span class="pull-end">:</span>
-                                                            </h5>
-                                                        </div>
-                                                        <div class="col-sm-9 col-7"><span>{{user_profile.Master.Email}}</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row mb-2">
-                                                        <div class="col-sm-3 col-5">
-                                                            <h5 class="f-w-500">Availability <span class="pull-end">:</span></h5>
-                                                        </div>
-                                                        <div class="col-sm-9 col-7"><span>Full Time (Free Lancer)</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row mb-2">
-                                                        <div class="col-sm-3 col-5">
-                                                            <h5 class="f-w-500">Age <span class="pull-end">:</span>
-                                                            </h5>
-                                                        </div>
-                                                        <div class="col-sm-9 col-7"><span>27</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row mb-2">
-                                                        <div class="col-sm-3 col-5">
-                                                            <h5 class="f-w-500">Location <span class="pull-end">:</span></h5>
-                                                        </div>
-                                                        <div class="col-sm-9 col-7"><span>Rosemont Avenue Melbourne,
-                                                                Florida</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row mb-2">
-                                                        <div class="col-sm-3 col-5">
-                                                            <h5 class="f-w-500">Year Experience <span class="pull-end">:</span></h5>
-                                                        </div>
-                                                        <div class="col-sm-9 col-7"><span>07 Year Experiences</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                
+                                                <div class="">
+													
+													<h4 class="text-primary mb-3">Create New Quiz</h4>
+													<form method="post" action="#">
+														{% csrf_token %}
+														<div class="row">
+															<div class="mb-3 col-md-6">
+																<label class="form-label">Subject</label>
+																<select class="form-control default-select" name="subject" id="subject">
+																	<option selected="">Choose...</option>
+																	<option>Option 1</option>
+																	<option>Option 2</option>
+																	<option>Option 3</option>
+																</select>
+															</div>
+															<div class="mb-3 col-md-6">
+																<label class="form-label">Category</label>
+																<select class="form-control default-select" name="category" id="category">
+																	<option selected="">Choose...</option>
+																	<option>Option 1</option>
+																	<option>Option 2</option>
+																	<option>Option 3</option>
+																</select>
+															</div>
+														</div>
+														<div class="row">
+															<div class="mb-3 col-md-4">
+																<label class="form-label">Quiz Title</label>
+																<input type="text" name="quiz_title" placeholder="Quiz Title" class="form-control" value="">
+															</div>
+															<div class="mb-3 col-md-4">
+																<label class="form-label">Duration</label>
+																<input type="number" name="duration" placeholder="Duration (min)" class="form-control" value="">
+															</div>
+															<div class="mb-3 col-md-4">
+																<label class="form-label">Total Score</label>
+																<input type="number" name="total_score" placeholder="Total Score" class="form-control" value="">
+															</div>
+														</div>
+														<div class="row">
+															<input type="range" name="difficulty_level" min=1 step=1 max=3 />
+														</div>
+												
+												
+														<button class="btn btn-primary" type="submit">Change</button>
+													</form>
+												
+												</div>
                                             </div>
                                             <div id="profile-settings" class="tab-pane fade active show">
                                                 <div class="pt-3">
@@ -1186,11 +1188,11 @@
 															{% csrf_token %}
                                                             <div class="row">
                                                                 <div class="mb-3 col-md-6">
-                                                                    <label class="form-label" for="name">Full Name</label>
+                                                                    <label class="form-label">Full Name</label>
                                                                     <input type="text" name="full_name" placeholder="Enter Your Full Name" class="form-control" value="{{user_profile.FullName}}">
                                                                 </div>
                                                                 <div class="mb-3 col-md-6">
-                                                                    <label class="form-label" for="mobile">Mobile</label>
+                                                                    <label class="form-label">Mobile</label>
                                                                     <input type="text" name="mobile" placeholder="Enter Your Mobile Number" class="form-control" value="{{user_profile.Mobile}}">
                                                                 </div>
                                                             </div>
@@ -1211,7 +1213,7 @@
                                                             </div>
                                                             <div class="row form-material">
 																<div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
-																	<label class="form-label" for="birthdate">Birth Date</label>
+																	<label class="form-label">Birth Date</label>
 																	<input type="text" class="form-control" name="birth_date" placeholder="2017-06-04" id="mdate" value="{{user_profile.BirthDate}}">
 																</div>
 															</div>
@@ -1221,21 +1223,21 @@
                                                                     <input type="text" name="city" class="form-control" value="{{user_profile.City}}">
                                                                 </div>
                                                                 <div class="mb-3 col-md-4">
-                                                                	<label class="form-label">State</label>
+                                                                    <label class="form-label">State</label>
                                                                     <select class="form-control default-select" name="state" id="inputState" value="{{user_profile.State}}">
                                                                         <option selected="">Choose...</option>
-                                                                        <option>Assam</option>
-                                                                        <option>Gujarat</option>
-                                                                        <option>Himachal Pradesh</option>
+                                                                        <option>Option 1</option>
+                                                                        <option>Option 2</option>
+                                                                        <option>Option 3</option>
                                                                     </select>
                                                                 </div>
-																<div class="mb-3 col-md-4">
-                                                                	<label class="form-label">Country</label>
-                                                                    <select class="form-control default-select" name="country" id="inputCountry" value="{{user_profile.Country}}">
+                                                                <div class="mb-3 col-md-4">
+                                                                    <label class="form-label">Country</label>
+                                                                    <select class="form-control default-select wide" name="country" id="inputCountry" value="{{user_profile.Country}}">
                                                                         <option selected="">Choose...</option>
-                                                                        <option>India</option>
-                                                                        <option>UK</option>
-                                                                        <option>USA</option>
+                                                                        <option>Option 1</option>
+                                                                        <option>Option 2</option>
+                                                                        <option>Option 3</option>
                                                                     </select>
                                                                 </div>
                                                                 <div class="mb-3 col-md-2">
@@ -1244,7 +1246,8 @@
                                                                 </div>
                                                             </div>
                                                             
-                                                            <button class="btn btn-primary" type="submit">Sign in</button>
+                                                            <button class="btn btn-primary" type="submit">Sign
+                                                                in</button>
                                                         </form>
                                                     </div>
                                                 </div>

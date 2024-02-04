@@ -37,7 +37,7 @@ class QuizCategory(models.Model):
     def __str__(self) -> str:
         return self.category
 
-class subject(models.Model):
+class Subject(models.Model):
     name = models.CharField(max_length=100)
 
     def __str__(self) -> str:
@@ -52,7 +52,7 @@ difficulty_level_choices=(
 class Quiz(models.Model):
     UserProfile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     category = models.ForeignKey(QuizCategory, on_delete=models.CASCADE)
-    subject = models.ForeignKey(subject, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
 
     Title = models.CharField(max_length=100)
     Duration = models.IntegerField(default = 0)

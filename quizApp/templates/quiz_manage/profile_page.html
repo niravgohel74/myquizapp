@@ -742,9 +742,9 @@
                                 <a class="nav-link" href="javascript:;" role="button" data-bs-toggle="dropdown">
 									<div class="header-info">
 										<small>Good Morning</small>
-										<span>James Sullivan</span>
+										<span>{{user_profile.FullName.title}}</span>
 									</div>
-                                    <img src="{% static 'quiz_manage/images/profile/12.png' %}" width="20" alt="">
+                                    <img src="{{user_profile.ProfileImage.url}}" width="20" alt="">
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <a href="app-profile.html" class="dropdown-item ai-icon">
@@ -755,7 +755,7 @@
                                         <svg id="icon-inbox" xmlns="http://www.w3.org/2000/svg" class="text-success" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                                         <span class="ms-2">Inbox </span>
                                     </a>
-                                    <a href="page-login.html" class="dropdown-item ai-icon">
+                                    <a href="{% url 'logout' %}" class="dropdown-item ai-icon">
                                         <svg id="icon-logout" xmlns="http://www.w3.org/2000/svg" class="text-danger" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
                                         <span class="ms-2">Logout </span>
                                     </a>
@@ -956,8 +956,8 @@
                     </div>
                     <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="javascript:void(0)">App</a></li>
-                            <li class="breadcrumb-item active"><a href="javascript:void(0)">Profile</a></li>
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">Quiz</a></li>
+                            <li class="breadcrumb-item active"><a href="javascript:void(0)">App</a></li>
                         </ol>
                     </div>
                 </div>
@@ -1037,13 +1037,13 @@
 									<div class="card-footer pt-0 pb-0 text-center">
 										<div class="row">
 											<div class="col-4 pt-3 pb-3 border-right">
-												<h3 class="mb-1">150</h3><span>Follower</span>
+												<h3 class="mb-1">0</h3><span>Follower</span>
 											</div>
 											<div class="col-4 pt-3 pb-3 border-right">
-												<h3 class="mb-1">140</h3><span>Place Stay</span>
+												<h3 class="mb-1">0</h3><span>Played</span>
 											</div>
 											<div class="col-4 pt-3 pb-3">
-												<h3 class="mb-1">45</h3><span>Reviews</span>
+												<h3 class="mb-1">0</h3><span>Rank</span>
 											</div>
 										</div>
 									</div>
@@ -1087,11 +1087,13 @@
                                 <div class="profile-tab">
                                     <div class="custom-tab-1">
                                         <ul class="nav nav-tabs">
-											<li class="nav-item"><a href="#profile-settings" data-bs-toggle="tab" class="nav-link active show">Profile</a>
+											<li class="nav-item"><a href="#profile-settings" data-bs-toggle="tab" class="nav-link ">Profile</a>
 											</li>
                                             <li class="nav-item"><a href="#security" data-bs-toggle="tab" class="nav-link">Security</a>
                                             </li>
-                                            <li class="nav-item"><a href="#about-me" data-bs-toggle="tab" class="nav-link">About Me</a>
+                                            <li class="nav-item"><a href="#create-quiz" data-bs-toggle="tab" class="nav-link">Create Quiz</a>
+                                            </li>
+											<li class="nav-item"><a href="#my-quizes" data-bs-toggle="tab" class="nav-link active show">My Quizes</a>
                                             </li>
                                         </ul>
                                         <div class="tab-content">
@@ -1123,15 +1125,8 @@
 													</div>
                                                 </div>
                                             </div>
-                                            <div id="about-me" class="tab-pane fade">
-                                                <div class="profile-about-me">
-                                                    <div class="pt-4 border-bottom-1 pb-3">
-                                                        <h4 class="text-primary">About Me</h4>
-                                                        
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="">
+                                            <div id="create-quiz" class="tab-pane fade">
+                                                <div class="pt-4 border-bottom-1 pb-3">
 													
 													<h4 class="text-primary mb-3">Create New Quiz</h4>
 													<form method="post" action="#">
@@ -1141,18 +1136,18 @@
 																<label class="form-label">Subject</label>
 																<select class="form-control default-select" name="subject" id="subject">
 																	<option selected="">Choose...</option>
-																	<option>Option 1</option>
-																	<option>Option 2</option>
-																	<option>Option 3</option>
+																	{% for subject in quiz_preset_data.subjects %}
+																	<option value="{{subject.id}}">{{subject}}</option>
+																	{% endfor %}
 																</select>
 															</div>
 															<div class="mb-3 col-md-6">
 																<label class="form-label">Category</label>
 																<select class="form-control default-select" name="category" id="category">
 																	<option selected="">Choose...</option>
-																	<option>Option 1</option>
-																	<option>Option 2</option>
-																	<option>Option 3</option>
+																	{% for category in quiz_preset_data.categories %}
+																	<option value="{{category.id}}">{{category}}</option>
+																	{% endfor %}
 																</select>
 															</div>
 														</div>
@@ -1170,17 +1165,14 @@
 																<input type="number" name="total_score" placeholder="Total Score" class="form-control" value="">
 															</div>
 														</div>
-														<div class="row">
-															<input type="range" name="difficulty_level" min=1 step=1 max=3 />
+														<div class="row mb-4">
+															<input type="range" name="difficulty_level" min=1 step=1 max=3 />	
 														</div>
-												
-												
-														<button class="btn btn-primary" type="submit">Change</button>
+														<button class="btn btn-primary mt-3" type="submit">Create</button>
 													</form>
-												
 												</div>
                                             </div>
-                                            <div id="profile-settings" class="tab-pane fade active show">
+                                            <div id="profile-settings" class="tab-pane fade">
                                                 <div class="pt-3">
                                                     <div class="settings-form">
                                                         <h4 class="text-primary">Account Setting</h4>
@@ -1199,17 +1191,13 @@
                                                             <div class="mb-3">
                                                                 <label class="form-label mr-3">I am</label>
                                                                 <div class="form-check d-inline-block">
-																	<input class="form-check-input" type="radio" name="gender" id="flexRadioDefault4" value="f">
-																	<label class="form-check-label" for="flexRadioDefault4">
-																	   Female
+																	{% for k,v in gender_choices.items %}
+																	<input class="form-check-input" type="radio" name="gender" id="{{k}}" value="{{k}}">
+																	<label class="form-check-label" for="{{k}}">
+																	   {{v.capitalize}}
 																	</label>
-																  </div>
-																  <div class="form-check d-inline-block mx-2">
-																	<input class="form-check-input" type="radio" name="gender" id="flexRadioDefault5" value="m">
-																	<label class="form-check-label" for="flexRadioDefault5">
-																	   Male
-																	</label>
-																  </div>
+																</div>
+																{% endfor %}
                                                             </div>
                                                             <div class="row form-material">
 																<div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
@@ -1253,6 +1241,24 @@
                                                 </div>
                                             </div>
                                         </div>
+										<div id="my-quizes" class="tab-pane fade active show">
+											<div class="pt-4 border-bottom-1 pb-3 p-3 row">	
+												<h4 class="text-primary mb-3">My Quizes</h4>
+												{% for quiz in my_quizes %}
+												<div class="widget-stat card bg-danger col-md-4 m-2" quiz-id="{{quiz.id}}" data-bs-toggle="modal" data-bs-target="#questionModal">
+													<div class="card-body">
+														<div class="media">
+															<div class="media-body text-white">
+																<p class="mb-1">{{quiz.Title}}</p>
+																<h3 class="text-white">Score: {{quiz.TotalScore}}</h3>
+																<p class="mb-1">Has {{quiz.TotalQuestions}} questions.</p>
+															</div>
+														</div>
+													</div>
+												</div>
+												{% endfor %}
+											</div>
+										</div>
                                     </div>
                                 </div>
                             </div>
@@ -1265,6 +1271,59 @@
             Content body end
         ***********************************-->
 
+		<!-- Modal -->
+		<div class="modal fade" id="questionModal">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Add Questions</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal">
+						</button>
+					</div>
+					<div class="modal-body">
+							<form method="post" action="{% url 'change_password' %}">
+								{% csrf_token %}
+								<div class="row">
+									<div class="mb-3 col-md-12">
+										<label class="form-label">Question</label>
+										<textarea class="form-control" name="question" placeholder="Type your question..."></textarea>
+									</div>
+								</div>
+								<div class="row">
+									<div class="mb-3 col-md-6">
+										<label class="form-label">Option A</label>
+										<input type="text" name="option_a" class="form-control" value="">
+									</div>
+									<div class="mb-3 col-md-6">
+										<label class="form-label">Option B</label>
+										<input type="text" name="option_a" class="form-control" value="">
+									</div>
+								</div>
+
+								<hr>
+								<div class="row">
+									
+									<div class="mb-3 col-md-5">
+										<select class="form-control default-select" name="set_answer" id="set_answer">
+											<option selected="">Set Answer...</option>
+											<option>Option A</option>
+											<option>Option B</option>
+										</select>
+									</div>
+
+									<div class="mb-3 col-md-7 text-end">
+										<button class="btn btn-primary" type="submit">Add</button>
+									</div>
+								</div>
+						
+						
+								
+							</form>
+						
+					</div>
+				</div>
+			</div>
+		</div>
 
         <!--**********************************
             Footer start
@@ -1303,6 +1362,7 @@
 	 
 	<script src="{% static 'quiz_manage/vendor/global/global.min.js' %}"></script>
 	<script src="{% static 'quiz_manage/vendor/bootstrap-select/dist/js/bootstrap-select.min.js' %}"></script>
+	<script src="{% static 'quiz_manage/js/custom.min.js' %}"></script>
 	<!-- momment js is must -->
     <script src="{% static 'quiz_manage/vendor/moment/moment.min.js' %}"></script>
 	<!-- pickdate -->
@@ -1310,16 +1370,9 @@
 	<script src="{% static 'quiz_manage/vendor/pickadate/picker.date.js' %}"></script>
 	<!-- Material color picker -->
     <script src="{% static 'quiz_manage/vendor/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js' %}"></script>
-	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-	<script>
-		$(document).ready(function() {
-			// Assuming you have an ID for the select element (inputState)
-			$("#inputState").change(function() {
-				var selectedOption = $(this).find(":selected").text();
-				console.log("Selected Option: " + selectedOption);
-			});
-		});
-	</script>
+	
+	<script src="{% static 'quiz_manage/js/deznav-init.js' %}"></script>
+    
 	<script>
 		$(document).ready(function() {
 			$('#mdate').bootstrapMaterialDatePicker({

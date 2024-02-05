@@ -42,5 +42,34 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     {% block js %}
     {% endblock %}
+	
+	<script>
+		$(document).ready(function(){
+			var sequence = {
+				0: 'A',
+				1: 'B',
+				2: 'C',
+				3: 'D',
+				4: 'E',
+				5: 'F',
+				6: 'G',
+				7: 'H',
+			}
+			$('.add_field').click(function(){
+				var next_option = sequence[$('.options .option').length]
+				var dom = `<div class="mb-3 col-md-6 option">
+										<label class="form-label">Option ${next_option}</label>
+										<input type="text" name="option_${next_option}" class="form-control" value="">
+										<button type="button" class="btn-close delete-field"></button>
+									</div>`
+				$('.options').append(dom)
+				$('set_answer').append(`<option>Option ${next_option}</option>`);
+
+				$('.delete-field').click(function(){
+					$(this).parent('.option').remove();
+				});
+			});
+		})
+	</script>
  </body>
 </html>

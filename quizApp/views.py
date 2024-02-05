@@ -225,6 +225,22 @@ def create_quiz(request):
         DifficultyLevel = request.post['difficulty_level'],
         TotalScore = request.POST['total_score'],
     )
+#ADD OPTIONS
+    def add_options(request):
+        master = Master.objects.get(Email=request.session['email'])
+        user = UserProfile.objects.get(Master=master)
+
+        quiz = Quiz.objects.get(
+            UserProfile=user,
+        )
+
+        QuesAns.objects.get(
+            Quiz = quiz,
+            Question = request.POST['question'],
+            Options = request.POST['options'],
+        )
+
+        return redirect(profile_page)
 
 ## LOGOUT ##
 def logout(request):

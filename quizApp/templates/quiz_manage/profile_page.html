@@ -1244,13 +1244,31 @@
 										<div id="my-quizes" class="tab-pane fade active show">
 											<div class="pt-4 border-bottom-1 pb-3 p-3 row">	
 												<h4 class="text-primary mb-3">My Quizes</h4>
+												<style>
+													.quiz-item{
+														position: relative;
+													}
+													.quiz-item::before{
+														content: attr(category);
+														position: absolute;
+														top: 0;
+														left: -45px;
+														bottom: 0;
+														margin: auto;
+														transform: rotate(-90deg);
+														width: max-content;
+														height: max-content;
+														color: #dddd;
+														text-transform: uppercase;
+													}
+												</style>
 												{% for quiz in my_quizes %}
-												<div class="widget-stat card bg-danger col-md-4 m-2" quiz-id="{{quiz.id}}" data-bs-toggle="modal" data-bs-target="#questionModal">
+												<div class="widget-stat card bg-danger col-md-4 m-2 quiz-item" category="{{quiz.category.category}}" quiz-id="{{quiz.id}}" data-bs-toggle="modal" data-bs-target="#questionModal">
 													<div class="card-body">
 														<div class="media">
 															<div class="media-body text-white">
 																<p class="mb-1">{{quiz.Title}}</p>
-																<h3 class="text-white">Score: {{quiz.TotalScore}}</h3>
+																<h3 class="text-white" style="width: max-content;">Score: {{quiz.TotalScore}}</h3>
 																<p class="mb-1">Has {{quiz.TotalQuestions}} questions.</p>
 															</div>
 														</div>
@@ -1289,14 +1307,19 @@
 										<textarea class="form-control" name="question" placeholder="Type your question..."></textarea>
 									</div>
 								</div>
-								<div class="row">
-									<div class="mb-3 col-md-6">
+								<div class="row options">
+									<div class="mb-3 col-md-6 option">
 										<label class="form-label">Option A</label>
 										<input type="text" name="option_a" class="form-control" value="">
 									</div>
-									<div class="mb-3 col-md-6">
+									<div class="mb-3 col-md-6 option">
 										<label class="form-label">Option B</label>
 										<input type="text" name="option_a" class="form-control" value="">
+									</div>
+								</div>
+								<div class="row">
+									<div class="col">
+										<button class="btn btn-primary w-auto add_field" type="button">Add Field</button>
 									</div>
 								</div>
 

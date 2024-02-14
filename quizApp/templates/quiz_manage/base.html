@@ -1,75 +1,92 @@
 <!DOCTYPE html>
 <html lang="en" class="h-100">
-<head>
-     {% load static %}
+  <head>
+    {% load static %}
     <!-- Title -->
-	<title>Quiz</title>
+    <title>Quiz</title>
 
-	<!-- Meta -->
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="author" content="DexignZone">
-	<meta name="robots" content="">
+    <!-- Meta -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="DexignZone" />
+    <meta name="robots" content="" />
 
-	<meta name="keywords" content="	admin dashboard, admin template, administration, analytics, bootstrap, cafe admin, elegant, food, health, kitchen, modern, responsive admin dashboard, restaurant dashboard">
-	<meta name="description" content="Boost your Restaurant business with Koki's Bootstrap 5 HTML Template. Our professionally designed admin templates cater specifically to the needs of Food, admin and cafe business, offering visually stunning and functional designs. Choose from a variety of Koki website templates that are perfect for showcasing your menu, promoting your services, and attracting Factory  customers. Partner with DexignZone to create an impressive online presence for your Restaurant. Start driving more traffic and growing your business today">
+    <meta
+      name="keywords"
+      content="	admin dashboard, admin template, administration, analytics, bootstrap, cafe admin, elegant, food, health, kitchen, modern, responsive admin dashboard, restaurant dashboard"
+    />
+    <meta
+      name="description"
+      content="Boost your Restaurant business with Koki's Bootstrap 5 HTML Template. Our professionally designed admin templates cater specifically to the needs of Food, admin and cafe business, offering visually stunning and functional designs. Choose from a variety of Koki website templates that are perfect for showcasing your menu, promoting your services, and attracting Factory  customers. Partner with DexignZone to create an impressive online presence for your Restaurant. Start driving more traffic and growing your business today"
+    />
 
-	<meta property="og:title" content="Koki - Restaurant Food Admin Dashboard Template">
-	<meta property="og:description" content="Boost your Restaurant business with Koki's Bootstrap 5 HTML Template. Our professionally designed admin templates cater specifically to the needs of Food, admin and cafe business, offering visually stunning and functional designs. Choose from a variety of Koki website templates that are perfect for showcasing your menu, promoting your services, and attracting Factory  customers. Partner with DexignZone to create an impressive online presence for your Restaurant. Start driving more traffic and growing your business today">
-	<meta property="og:image" content="social-image.png">
-	<meta name="format-detection" content="telephone=no">
+    <meta
+      property="og:title"
+      content="Koki - Restaurant Food Admin Dashboard Template"
+    />
+    <meta
+      property="og:description"
+      content="Boost your Restaurant business with Koki's Bootstrap 5 HTML Template. Our professionally designed admin templates cater specifically to the needs of Food, admin and cafe business, offering visually stunning and functional designs. Choose from a variety of Koki website templates that are perfect for showcasing your menu, promoting your services, and attracting Factory  customers. Partner with DexignZone to create an impressive online presence for your Restaurant. Start driving more traffic and growing your business today"
+    />
+    <meta property="og:image" content="social-image.png" />
+    <meta name="format-detection" content="telephone=no" />
 
-	<!-- Mobile Specific -->
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Mobile Specific -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-	<!-- Favicon icon -->
-	<link rel="icon" type="image/png" href="{% static 'quiz_manage/images/favicon.png' %}">
-    {% block css %}
-    {% endblock %}
-    <link href="{% static 'quiz_manage/css/style.css' %}" rel="stylesheet">
+    <!-- Favicon icon -->
+    <link
+      rel="icon"
+      type="image/png"
+      href="{% static 'quiz_manage/images/favicon.png' %}"
+    />
+    {% block css %} {% endblock %}
+    <link href="{% static 'quiz_manage/css/style.css' %}" rel="stylesheet" />
+  </head>
 
-</head>
+  <body class="h-100">
+    {% block main-content %} {% endblock %}
 
-<body class="h-100">
-    {% block main-content %}
-    {% endblock %}
-
- <!--**********************************
+    <!--**********************************
         Scripts
     ***********************************-->
     <!-- Required vendors -->
-    
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    {% block js %}
-    {% endblock %}
-	
-	<script>
-		$(document).ready(function(){
-			var sequence = {
-				0: 'A',
-				1: 'B',
-				2: 'C',
-				3: 'D',
-				4: 'E',
-				5: 'F',
-				6: 'G',
-				7: 'H',
-			}
-			$('.add_field').click(function(){
-				var next_option = sequence[$('.options .option').length]
-				var dom = `<div class="mb-3 col-md-6 option">
-										<label class="form-label">Option ${next_option}</label>
-										<input type="text" name="option_${next_option}" class="form-control" value="">
-										<button type="button" class="btn-close delete-field"></button>
-									</div>`
-				$('.options').append(dom)
-				$('set_answer').append(`<option>Option ${next_option}</option>`);
 
-				$('.delete-field').click(function(){
-					$(this).parent('.option').remove();
-				});
-			});
-		})
-	</script>
- </body>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    {% block js %} {% endblock %}
+
+    <script>
+      $(document).ready(function () {
+        var sequence = {
+          0: "A",
+          1: "B",
+          2: "C",
+          3: "D",
+          4: "E",
+          5: "F",
+          6: "G",
+          7: "H",
+        };
+        $(".add_field").click(function () {
+          var next_option = sequence[$(".options .option").length];
+          var dom = `<div class="mb-3 col-md-6 option">
+								        <label class="form-label">Option ${next_option}</label>
+								        <input type="text" name="option_${next_option}" class="form-control" value="">
+								        <button type="button" class="btn-close delete-field" style="position: relative;  top:-40px; left:320px;"></button>
+							</div>`;
+          $(".options").append(dom);
+          $("#set_answer").append(`<option>Option ${next_option}</option>`);
+
+          $(".delete-field").click(function () {
+            $(this).parent(".option").remove();
+          });
+        });
+        $(".quiz-item").click(function () {
+          var id = $(this).attr("quiz-id");
+          var url = `/add_options/${id}/`;
+          $("#questionModal").find("form").attr("action", url);
+        });
+      });
+    </script>
+  </body>
 </html>

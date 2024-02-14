@@ -1263,13 +1263,16 @@
 													}
 												</style>
 												{% for quiz in my_quizes %}
-												<div class="widget-stat card bg-danger col-md-4 m-2 quiz-item" category="{{quiz.category.category}}" quiz-id="{{quiz.id}}" data-bs-toggle="modal" data-bs-target="#questionModal">
+												<div class="widget-stat card bg-danger col-md-4 m-2 quiz-item" category="{{quiz.category.category}}" quiz-id="{{quiz.id}}">
 													<div class="card-body">
 														<div class="media">
 															<div class="media-body text-white">
 																<p class="mb-1">{{quiz.Title}}</p>
 																<h3 class="text-white" style="width: max-content;">Score: {{quiz.TotalScore}}</h3>
 																<p class="mb-1">Has {{quiz.TotalQuestions}} questions.</p>
+																<hr/>
+																<a href="" type="submit" style="font-size: 85%; color: #fff;" data-bs-toggle="modal" data-bs-target="#questionModal">Add Question</a> |
+																<a href="" type="submit" style="font-size: 85%; color: #fff;" data-bs-toggle="modal" data-bs-target="#viewModal">View Question</a>
 															</div>
 														</div>
 													</div>
@@ -1291,15 +1294,15 @@
 
 		<!-- Modal -->
 		<div class="modal fade" id="questionModal">
-			<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title">Add Questions</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal">
 						</button>
-					</div>
+					</div>	
 					<div class="modal-body">
-							<form method="post" action="{% url 'change_password' %}">
+							<form method="post" action="">
 								{% csrf_token %}
 								<div class="row">
 									<div class="mb-3 col-md-12">
@@ -1314,7 +1317,7 @@
 									</div>
 									<div class="mb-3 col-md-6 option">
 										<label class="form-label">Option B</label>
-										<input type="text" name="option_a" class="form-control" value="">
+										<input type="text" name="option_b" class="form-control" value="">
 									</div>
 								</div>
 								<div class="row">
@@ -1325,12 +1328,11 @@
 
 								<hr>
 								<div class="row">
-									
 									<div class="mb-3 col-md-5">
 										<select class="form-control default-select" name="set_answer" id="set_answer">
 											<option selected="">Set Answer...</option>
-											<option>Option A</option>
-											<option>Option B</option>
+											<option value="0">Option A</option>
+											<option value="1">Option B</option>
 										</select>
 									</div>
 
@@ -1339,9 +1341,23 @@
 									</div>
 								</div>
 						
-						
-								
 							</form>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Modal -->
+		<div class="modal fade" id="viewModal">
+			<div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">View Questions</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal">
+						</button>
+					</div>	
+					<div class="modal-body">
 						
 					</div>
 				</div>

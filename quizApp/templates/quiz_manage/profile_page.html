@@ -1242,7 +1242,7 @@
                                             </div>
                                         </div>
 										<div id="my-quizes" class="tab-pane fade active show">
-											<div class="pt-4 border-bottom-1 pb-3 p-3 row">	
+											<div class="pt-4 border-bottom-1 pb-3 p-3">	
 												<h4 class="text-primary mb-3">My Quizes</h4>
 												<style>
 													.quiz-item{
@@ -1262,22 +1262,26 @@
 														text-transform: uppercase;
 													}
 												</style>
+												<div class="row">
 												{% for quiz in my_quizes %}
-												<div class="widget-stat card bg-danger col-md-4 m-2 quiz-item" category="{{quiz.category.category}}" quiz-id="{{quiz.id}}">
-													<div class="card-body">
+												<div class="widget-stat card bg-danger col-md-4 m-2 quiz-item" category="{{quiz.category.category}}">
+													<div class="card-body mb-0 pb-0">
 														<div class="media">
 															<div class="media-body text-white">
 																<p class="mb-1">{{quiz.Title}}</p>
 																<h3 class="text-white" style="width: max-content;">Score: {{quiz.TotalScore}}</h3>
 																<p class="mb-1">Has {{quiz.TotalQuestions}} questions.</p>
-																<hr/>
-																<a href="" type="submit" style="font-size: 85%; color: #fff;" data-bs-toggle="modal" data-bs-target="#questionModal">Add Question</a> |
-																<a href="" type="submit" style="font-size: 85%; color: #fff;" data-bs-toggle="modal" data-bs-target="#viewModal">View Question</a>
 															</div>
 														</div>
 													</div>
+													<hr>
+													<div class="card-footer border-0 m-0 pt-0">
+														<a href="#" class="card-link text-white add-new" quiz-id="{{quiz.id}}" data-bs-toggle="modal" data-bs-target="#questionModal">Add New</a>
+														<a href="#" class="card-link text-white view-ques float-end" quiz-id="{{quiz.id}}" data-bs-toggle="modal" data-bs-target="#questionViewModal">View</a>
+													</div>
 												</div>
 												{% endfor %}
+												</div>
 											</div>
 										</div>
                                     </div>
@@ -1292,7 +1296,7 @@
             Content body end
         ***********************************-->
 
-		<!-- Modal -->
+		<!--Add Question Modal -->
 		<div class="modal fade" id="questionModal">
 			<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 				<div class="modal-content">
@@ -1322,7 +1326,7 @@
 								</div>
 								<div class="row">
 									<div class="col">
-										<button class="btn btn-primary w-auto add_field" type="button">Add Field</button>
+										<button class="btn btn-primary w-auto new_field" type="button">Add Field</button>
 									</div>
 								</div>
 
@@ -1348,9 +1352,9 @@
 			</div>
 		</div>
 
-		<!-- Modal -->
-		<div class="modal fade" id="viewModal">
-			<div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+		<!--View Question Modal -->
+		<div class="modal fade" id="questionViewModal">
+			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title">View Questions</h5>
@@ -1358,7 +1362,15 @@
 						</button>
 					</div>	
 					<div class="modal-body">
-						
+						<div class="card border-0 pb-0">
+							<div class="card-body p-0">
+								<div id="DZ_W_Todo3" class="widget-media dz-scroll height370">
+									<ul class="timeline">
+										
+									</ul>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -15,7 +15,7 @@ urlpatterns = [
     path("upload_profile_image/", upload_profile_image, name="upload_profile_image"),
     path("change_password/", change_password, name="change_password"),
     path("add_options/<int:id>/", add_options, name="add_options"),
-    path("view_question/", view_question, name="view_question"),
+    path("fetch_questions/<int:id>/", fetch_questions, name="fetch_questions"),
     
     path("logout/", logout, name="logout")
     

@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from .models import *
 from django.core.mail import send_mail
 from django.conf import settings
@@ -276,10 +277,16 @@ def add_options(request, id):
 
     return redirect(profile_page)
 
+# FETCH QUESTIONS
+def fetch_questions(request, id):
+    quiz = Quiz.objects.get(id=id)
+    questions = QuesAns.objects.filter(Quiz=quiz)
 
-def view_question(request):
-    pass
+    dic = {'ques_ans':[]}
+    for ques in questions:
+        dic["ques_ans"].append({'question': ques.Question, 'options': ques.Options, 'answer':ques.Answer})
 
+    return JsonResponse(dic)
 
 ## LOGOUT ##
 def logout(request):

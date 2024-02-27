@@ -16,6 +16,9 @@ urlpatterns = [
     path("change_password/", change_password, name="change_password"),
     path("add_options/<int:id>/", add_options, name="add_options"),
     path("fetch_questions/<int:id>/", fetch_questions, name="fetch_questions"),
+
+
+    path("play_page/", play_page, name="play_page"),
     
     path("logout/", logout, name="logout")
     

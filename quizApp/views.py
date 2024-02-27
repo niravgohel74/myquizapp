@@ -293,3 +293,13 @@ def logout(request):
     if "email" in request.session:
         del request.session["email"]
     return redirect(login_page)
+
+
+
+################################################################
+## QUIZ PLAY ##
+
+play_page_link = "play/quiz_play.html"
+
+def play_page(request):
+    return render(request, play_page_link)

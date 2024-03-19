@@ -11,4 +11,4 @@ This project is of Quiz Application. In this project first you have register you
 * Start App
 
 # To run project
-* Open http://127.0.0.1:8000
+Open your web browser and go to http://127.0.0.1:8000/ to view the application.

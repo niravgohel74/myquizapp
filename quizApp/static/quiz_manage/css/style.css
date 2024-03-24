@@ -9632,7 +9632,7 @@ a {
   padding-top: 40px;
   padding-right: 40px;
   padding-left: 40px; }
-  @media only screen and (max-width: 1400px) {
+  @media only screen and (max-width: 14000px) {
     .content-body .container-fluid, .content-body .container-sm, .content-body .container-md, .content-body .container-lg, .content-body .container-xl, .content-body .container-xxl {
       padding-top: 30px;
       padding-right: 30px;

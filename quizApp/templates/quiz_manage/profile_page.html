@@ -1,9 +1,10 @@
 {% extends "quiz_manage/base.html" %}
 {% load static %}
-
 {% block css %}
+
 	 <link href="{% static 'quiz_manage/vendor/bootstrap-select/dist/css/bootstrap-select.min.css' %}" rel="stylesheet">
 	
+	 <!-- Custom Css -->
 	 <style>
 		label.custom_css_tag {
 			border-color: #dd2f6e;
@@ -15,20 +16,23 @@
 			margin-right: 5px;
 		}
 	</style>
+
 	<!-- Material color picker -->
     <link href="{% static 'quiz_manage/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css' %}" rel="stylesheet">
-
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 	<!-- Pick date -->
     <link rel="stylesheet" href="{% static 'quiz_manage/vendor/pickadate/themes/default.css' %}">
     <link rel="stylesheet" href="{% static 'quiz_manage/vendor/pickadate/themes/default.date.css' %}">
+
 {% endblock %}
 
 {% block main-content %}
+
     <!--*******************
         Preloader start
     ********************-->
+
     <div id="preloader">
         <div class="sk-three-bounce">
             <div class="sk-child sk-bounce1"></div>
@@ -36,6 +40,7 @@
             <div class="sk-child sk-bounce3"></div>
         </div>
     </div>
+
     <!--*******************
         Preloader end
     ********************-->
@@ -44,6 +49,7 @@
     <!--**********************************
         Main wrapper start
     ***********************************-->
+
     <div id="main-wrapper">
         <!--**********************************
             Header start
@@ -57,7 +63,6 @@
                                 App Profile
                             </div>
                         </div>
-
                         <ul class="navbar-nav header-right">
                             <li class="nav-item dropdown header-profile">
                                 <a class="nav-link" href="javascript:;" role="button" data-bs-toggle="dropdown">
@@ -94,9 +99,9 @@
         <!--**********************************
             Content body start
         ***********************************-->
-        <div class="content-body">
-            <div class="container-fluid">
-                <div class="row page-titles mx-0">
+        <div class="content-body ">
+            <div class="container-fluid ">
+               <div class="row page-titles mx-0">
                     <div class="col-sm-6 p-md-0">
                         <div class="welcome-text">
                             <h4>Hi, welcome back!</h4>
@@ -109,7 +114,7 @@
                             <li class="breadcrumb-item active"><a href="javascript:void(0)">App</a></li>
                         </ol>
                     </div>
-                </div>
+            	</div>
                 <!-- row -->
                 <div class="row">
                     <div class="col-lg-12">
@@ -163,8 +168,7 @@
 													<div class="modal-content">
 														<div class="modal-header">
 															<h5 class="modal-title">Upload images</h5>
-															<button type="button" class="btn-close" data-bs-dismiss="modal">
-															</button>
+															<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 														</div>
 														<div class="modal-body">
 															<form class="input-group mb-3 flex-nowrap" method="post" action="{% url 'upload_profile_image' %}" onchange="this.submit()" enctype="multipart/form-data">
@@ -180,7 +184,6 @@
 											</div>
 										</div>
 									</div>
-									
 									<div class="card-footer pt-0 pb-0 text-center">
 										<div class="row">
 											<div class="col-4 pt-3 pb-3 border-right">
@@ -219,8 +222,6 @@
 												<label class="custom_css_tag">Java Script</label>
 												<label class="custom_css_tag">Python</label>
 												<label class="custom_css_tag">Java</label>
-
-												
 											</div>
 										</div>
 									</div>
@@ -234,16 +235,62 @@
                                 <div class="profile-tab">
                                     <div class="custom-tab-1">
                                         <ul class="nav nav-tabs">
-											<li class="nav-item"><a href="#profile-settings" data-bs-toggle="tab" class="nav-link ">Profile</a>
+											<li class="nav-item"><a href="#profile-settings" data-bs-toggle="tab" class="nav-link">Profile</a>
 											</li>
                                             <li class="nav-item"><a href="#security" data-bs-toggle="tab" class="nav-link">Security</a>
                                             </li>
                                             <li class="nav-item"><a href="#create-quiz" data-bs-toggle="tab" class="nav-link">Create Quiz</a>
                                             </li>
-											<li class="nav-item"><a href="#my-quizes" data-bs-toggle="tab" class="nav-link active show">My Quizes</a>
+											<li class="nav-item"><a href="#my-quizes" data-bs-toggle="tab" class="nav-link">My Quizes</a>
+                                            </li>
+											<li class="nav-item"><a href="#play-quiz" data-bs-toggle="tab" class="nav-link active show">Play Quiz</a>
                                             </li>
                                         </ul>
-                                        <div class="tab-content">
+                                    	<div class="tab-content">
+											
+											<div id="my-quizes" class="tab-pane fade">
+												<div class="pt-4 border-bottom-1 pb-3 p-3">	
+													<h4 class="text-primary mb-3">My Quizes</h4>
+													<style>
+														.quiz-item{
+															position: relative;
+														}
+														.quiz-item::before{
+															content: attr(category);
+															position: absolute;
+															top: 0;
+															left: -45px;
+															bottom: 0;
+															margin: auto;
+															transform: rotate(-90deg);
+															width: max-content;
+															height: max-content;
+															color: #dddd;
+															text-transform: uppercase;
+														}
+													</style>
+													<div class="row">
+														{% for quiz in my_quizes %}
+														<div class="widget-stat card bg-danger col-xl-4 m-2 quiz-item" category="{{quiz.category.category}}">
+															<div class="card-body mb-0 pb-0">
+																<div class="media">
+																	<div class="media-body text-white">
+																		<p class="mb-1">{{quiz.Title}}</p>
+																		<h3 class="text-white" style="width: max-content;">Score: {{quiz.TotalScore}}</h3>
+																		<p class="mb-1">Has {{quiz.TotalQuestions}} questions.</p>
+																	</div>
+																</div>
+															</div>
+															<hr>
+															<div class="card-footer border-0 m-0 pt-0">
+																<a href="#" class="card-link text-white add-new" quiz-id="{{quiz.id}}" data-bs-toggle="modal" data-bs-target="#questionModal">Add New</a>
+																<a href="#" class="card-link text-white view-ques float-end" quiz-id="{{quiz.id}}" data-bs-toggle="modal" data-bs-target="#questionViewModal">View</a>
+															</div>
+														</div>
+														{% endfor %}
+													</div>
+												</div>
+											</div>
                                             <div id="security" class="tab-pane fade">
                                                 <div class="my-post-content pt-3">
 													<div class="">
@@ -264,17 +311,13 @@
 																	<input type="password" name="rewrite_pwd" placeholder="Rewrite Password" class="form-control" value="">
 																</div>
 															</div>
-													
-													
 															<button class="btn btn-primary" type="submit">Change</button>
 														</form>
-													
 													</div>
                                                 </div>
                                             </div>
                                             <div id="create-quiz" class="tab-pane fade">
                                                 <div class="pt-4 border-bottom-1 pb-3">
-													
 													<h4 class="text-primary mb-3">Create New Quiz</h4>
 													<form method="post" action="#">
 														{% csrf_token %}
@@ -319,7 +362,7 @@
 													</form>
 												</div>
                                             </div>
-                                            <div id="profile-settings" class="tab-pane fade">
+											<div id="profile-settings" class="tab-pane fade">
                                                 <div class="pt-3">
                                                     <div class="settings-form">
                                                         <h4 class="text-primary">Account Setting</h4>
@@ -380,65 +423,50 @@
                                                                     <input type="text" name="pincode" class="form-control" value="{{user_profile.Pincode}}">
                                                                 </div>
                                                             </div>
-                                                            
-                                                            <button class="btn btn-primary" type="submit">Sign
-                                                                in</button>
+                                                            <button class="btn btn-primary" type="submit">Signin</button>
                                                         </form>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-										<div id="my-quizes" class="tab-pane fade active show">
-											<div class="pt-4 border-bottom-1 pb-3 p-3">	
-												<h4 class="text-primary mb-3">My Quizes</h4>
-												<style>
-													.quiz-item{
-														position: relative;
-													}
-													.quiz-item::before{
-														content: attr(category);
-														position: absolute;
-														top: 0;
-														left: -45px;
-														bottom: 0;
-														margin: auto;
-														transform: rotate(-90deg);
-														width: max-content;
-														height: max-content;
-														color: #dddd;
-														text-transform: uppercase;
-													}
-												</style>
-												<div class="row">
-												{% for quiz in my_quizes %}
-												<div class="widget-stat card bg-danger col-md-4 m-2 quiz-item" category="{{quiz.category.category}}">
-													<div class="card-body mb-0 pb-0">
-														<div class="media">
-															<div class="media-body text-white">
-																<p class="mb-1">{{quiz.Title}}</p>
-																<h3 class="text-white" style="width: max-content;">Score: {{quiz.TotalScore}}</h3>
-																<p class="mb-1">Has {{quiz.TotalQuestions}} questions.</p>
+											<div id="play-quiz" class="widget-media dz-scroll height300 active show">
+												<div class="pt-0 border-bottom-1 pb-3 p-lg-3">	
+													<h3 class="text-primary mb-3">Play Quiz</h3>
+													{% for quiz in my_quizes %}
+													<ul class="timeline">
+													<li>
+														<div class="timeline-panel">
+															<div class="media me-2">
+																<img alt="image" width="50" src="images/avatar/1.jpg">
+															</div>
+															<div class="media-body p-3">
+																<h5 class="mb-1 quiz-item">{{quiz.Title}}</h5>
+																<p class="mb-1" style="width: max-content;">Score: {{quiz.TotalScore}} and Has {{quiz.TotalQuestions}} questions.</p>
+																<!-- <p class="mb-1">I shared this on my fb wall a few months back..</p> -->
+															</div>
+															<div class="">
+																	<!-- <span class="badge light badge-success">Successful</span> -->
+																	<!-- <span class="badge light badge-danger">Canceled</span> -->
+																	<!-- <span class="badge light badge-warning">Pending</span> -->
+																	<!-- <span class="badge light badge-danger">Faield</span> -->
+																	<a class="btn btn-primary btn-sm shadow" href="{% url 'play_quiz' quiz.id %}"** target="_blank">Play</a>
 															</div>
 														</div>
-													</div>
-													<hr>
-													<div class="card-footer border-0 m-0 pt-0">
-														<a href="#" class="card-link text-white add-new" quiz-id="{{quiz.id}}" data-bs-toggle="modal" data-bs-target="#questionModal">Add New</a>
-														<a href="#" class="card-link text-white view-ques float-end" quiz-id="{{quiz.id}}" data-bs-toggle="modal" data-bs-target="#questionViewModal">View</a>
-													</div>
-												</div>
-												{% endfor %}
+													</li>
+													</ul>
+													{% endfor %}
 												</div>
 											</div>
 										</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+								
+			
         <!--**********************************
             Content body end
         ***********************************-->
@@ -545,9 +573,11 @@
 
         
     </div>
+
     <!--**********************************
         Main wrapper end
     ***********************************-->
+
 {% endblock %}
 
 	<!--removeIf(production)-->
@@ -556,21 +586,25 @@
         Scripts
     ***********************************-->
     <!-- Required vendors -->
-    {% block js %}
+
+{% block js %}
 	 
 	<script src="{% static 'quiz_manage/vendor/global/global.min.js' %}"></script>
 	<script src="{% static 'quiz_manage/vendor/bootstrap-select/dist/js/bootstrap-select.min.js' %}"></script>
 	<script src="{% static 'quiz_manage/js/custom.min.js' %}"></script>
+
 	<!-- momment js is must -->
     <script src="{% static 'quiz_manage/vendor/moment/moment.min.js' %}"></script>
+
 	<!-- pickdate -->
     <script src="{% static 'quiz_manage/vendor/pickadate/picker.js' %}"></script>
 	<script src="{% static 'quiz_manage/vendor/pickadate/picker.date.js' %}"></script>
+
 	<!-- Material color picker -->
     <script src="{% static 'quiz_manage/vendor/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js' %}"></script>
-	
 	<script src="{% static 'quiz_manage/js/deznav-init.js' %}"></script>
-    
+
+	<!-- Custom Script -->
 	<script>
 		$(document).ready(function() {
 			$('#mdate').bootstrapMaterialDatePicker({
@@ -579,4 +613,5 @@
 			});
 		})
 	</script>
-   {% endblock %}
+
+{% endblock %}

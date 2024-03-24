@@ -262,6 +262,7 @@ def add_options(request, id):
         UserProfile=user
     )
 
+
     options = []
     for d in request.POST:
         if d.startswith("option"):
@@ -294,12 +295,142 @@ def logout(request):
         del request.session["email"]
     return redirect(login_page)
 
-
-
-################################################################
+######################################################################
 ## QUIZ PLAY ##
 
-play_page_link = "play/quiz_play.html"
+quiz_play_link = "play/quiz_play.html"
+play_result = "quiz_pay_result.html"
 
-def play_page(request):
-    return render(request, play_page_link)
+def quiz_play(request):
+    return render(request, quiz_play_link)
+def quiz_play_result(request):
+    return render(request, play_result)
+
+# from django.core.exceptions import ObjectDoesNotExist
+
+# def play_quiz(request, id):
+    try:
+        quiz = Quiz.objects.get(pk=id)
+    except ObjectDoesNotExist:
+        print("Error")
+
+    master = Master.objects.get(Email=request.session["email"])
+    user = UserProfile.objects.get(Master=master)
+
+    try:
+        QuizPlay.objects.get(QuesAns__Quiz=quiz, UserProfile=user)
+        print("Played")
+        return redirect(profile_page)
+    except ObjectDoesNotExist:
+        pass
+
+    # Initialize quiz play data
+    questions = QuesAns.objects.filter(Quiz=quiz) 
+    current_question = 0
+    question_data = questions[current_question]
+    score = 0
+    selected_answer = None
+
+    # Handle GET requests
+    if request.method == 'GET':
+        context = {
+            'quiz': quiz,
+            'question_data': question_data,
+            'current_question': current_question + 1,
+            'total_questions': len(questions),
+            'score': score,
+        }
+        return render(request, 'play/quiz_play.html', context)
+
+    # Handle POST requests (answer submission)
+    elif request.method == 'POST':
+        selected_answer = request.POST.get('answer')
+        
+        # Check if answer is valid
+        if selected_answer in question_data.Options:
+            # Update score based on correct answer
+            if selected_answer == question_data.Answer:
+                score += quiz.TotalScore // len(questions)  # Award proportional score per question
+
+            # Move to next question (if not the last one)
+            current_question += 1
+            if current_question < len(questions):
+                question_data = questions[current_question]
+                selected_answer = None  # Reset answer selection for the next question
+                context = {
+                    'quiz': quiz,
+                    'question_data': question_data,
+                    'current_question': current_question + 1,
+                    'total_questions': len(questions),
+                    'score': score,
+                }
+                return render(request, 'play/quiz_play.html', context)
+            else:
+                # Quiz is complete, save play data and redirect to results page
+                QuizPlay.objects.create(
+                    QuesAns=question_data,
+                    UserProfile=user,
+                    Score=score,
+                )
+                return redirect('quiz_result', quiz_id=quiz.id)
+        else:
+            # Handle invalid answer (e.g., display error message)
+            context = {
+                'quiz': quiz,
+                'question_data': question_data,
+                'current_question': current_question + 1,
+                'total_questions': len(questions),
+                'score': score,
+                'error_message': 'Invalid answer selection. Please choose a valid option.',
+            }
+            return render(request, 'play/quiz_play.html', context)
+
+    # Handle invalid request methods
+    else:
+        return redirect('error_page')
+
+
+def play_quiz(request, id):
+    quiz = Quiz.objects.get(id=id)
+    questions = QuesAns.objects.filter(Quiz=quiz)
+
+    all_questions = questions.count()
+
+    if request.method == 'POST':
+        score = 0
+        for question in questions:
+            selected_option = request.POST.get(f'question_{question.id}')
+            if selected_option == question.Answer:
+                score += 1
+
+        percentage = (score / all_questions) * 100
+        remark_level = ''
+
+        if percentage <= 25:
+            remark_level = 'Poor'
+        elif percentage <= 50:
+            remark_level = 'Average'
+        elif percentage <= 75:
+            remark_level = 'Good'
+        else:
+            remark_level = 'Excellent'
+
+        context = {
+            'quiz': quiz,
+            'questions': questions,
+            'score': score,
+            'total_questions': all_questions,
+            'percentage': percentage,
+            'remark_level': remark_level,
+        }
+
+        return render(request, 'play/quiz_play_result.html', context)
+
+    context = {
+        'quiz': quiz,
+        'questions': questions,
+        'total_questions': all_questions,
+        
+    }
+
+    return render(request, 'play/quiz_play.html', context)

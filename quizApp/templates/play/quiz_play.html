@@ -1,228 +1,27 @@
-{% extends 'play/base.html' %}
+{% extends "play/base.html" %}
 {% load static %}
 {% block main-content %}
-    <main class="overflow-hidden">
-      <!-- CountDOwn -->
-      <div class="counterContainer">
-        <svg class="counter">
-          <circle cx="50%" cy="50%" r="70" />
-        </svg>
-        <span id="countdown-timer">60</span>
-      </div>
 
-      <!-- Steps Start -->
-      <section class="steps">
-        <form
-          novalidate
-          onsubmit="return false"
-          id="stepForm"
-          class="show-section"
-        >
-          <!-- Step 1 -->
-          <fieldset id="step1">
-            <!-- Options -->
-            <div class="d-flex flex-wrap options">
-              <div class="option animate">
-                <input type="radio" name="op1" value="Very Disappointed" />
-                <label>Very Disappointed</label>
-              </div>
-              <div class="option animate delay-100">
-                <input type="radio" name="op1" value="Somewhat Disappointed" />
-                <label>Somewhat Disappointed</label>
-              </div>
-              <div class="option animate delay-200">
-                <input type="radio" name="op1" value="Not Disappointed" />
-                <label>Not Disappointed</label>
-              </div>
-              <div class="option animate delay-300">
-                <input type="radio" name="op1" value="Support" />
-                <label>Support</label>
-              </div>
-            </div>
+<h1>{{ quiz.Title }}</h1>
 
-            <!-- Question -->
-            <div class="question">
-              <h1 class="animate">
-                Would you Feel if you Could No Longer use Product?
-              </h1>
+<form method="post">
+  {% csrf_token %}
 
-              <!-- Next Prev -->
-              <div class="nextPrev">
-                <button class="prev" type="button">
-                  <i class="fa-solid fa-arrow-left"></i>
-                </button>
-                <button class="next" type="button" id="step1btn">
-                  <i class="fa-solid fa-arrow-right"></i>
-                </button>
-              </div>
-              <div class="fill"></div>
-            </div>
-          </fieldset>
-          <!-- Step 2 -->
-          <fieldset id="step2">
-            <!-- Options -->
-            <div class="d-flex flex-wrap options">
-              <div class="option animate">
-                <input type="radio" name="op2" value="Very Disappointed" />
-                <label>Very Disappointed</label>
-              </div>
-              <div class="option animate delay-100">
-                <input type="radio" name="op2" value="Somewhat Disappointed" />
-                <label>Somewhat Disappointed</label>
-              </div>
-              <div class="option animate delay-200">
-                <input type="radio" name="op2" value="Not Disappointed" />
-                <label>Not Disappointed</label>
-              </div>
-              <div class="option animate delay-300">
-                <input type="radio" name="op2" value="Support" />
-                <label>Support</label>
-              </div>
-            </div>
+  {% for question in questions %}
+    <h4>Question {{ forloop.counter }}:</h4>
+    <p>{{ question.Question }}</p>
 
-            <!-- Question -->
-            <div class="question">
-              <h1>Would you Feel if you Could No Longer use Product?</h1>
+    <ul>
+      {% for option in question.Options.split %}
+      <li>
+        <input type="radio" name="question_{{ question.id }}" id="option_{{ forloop.counter }}_{{ loop.counter }}" value="{{ option }}" required>
+        <label for="option_{{ forloop.counter }}_{{ loop.counter }}">{{ option }}</label>
+      </li>
+      {% endfor %}
+    </ul>
+  {% endfor %}
 
-              <!-- Next Prev -->
-              <div class="nextPrev">
-                <button class="prev" type="button">
-                  <i class="fa-solid fa-arrow-left"></i>
-                </button>
-                <button class="next" type="button" id="step2btn">
-                  <i class="fa-solid fa-arrow-right"></i>
-                </button>
-              </div>
-              <div class="fill"></div>
-            </div>
-          </fieldset>
-          <!-- Step 3 -->
-          <fieldset id="step3">
-            <!-- Options -->
-            <div class="d-flex flex-wrap options">
-              <div class="option animate">
-                <input type="radio" name="op3" value="Very Disappointed" />
-                <label>Very Disappointed</label>
-              </div>
-              <div class="option animate delay-100">
-                <input type="radio" name="op3" value="Somewhat Disappointed" />
-                <label>Somewhat Disappointed</label>
-              </div>
-              <div class="option animate delay-200">
-                <input type="radio" name="op3" value="Not Disappointed" />
-                <label>Not Disappointed</label>
-              </div>
-              <div class="option animate delay-300">
-                <input type="radio" name="op3" value="Support" />
-                <label>Support</label>
-              </div>
-            </div>
+  <button type="submit">Submit Answers</button>
+</form>
 
-            <!-- Question -->
-            <div class="question">
-              <h1>Would you Feel if you Could No Longer use Product?</h1>
-
-              <!-- Next Prev -->
-              <div class="nextPrev">
-                <button class="prev" type="button">
-                  <i class="fa-solid fa-arrow-left"></i>
-                </button>
-                <button class="next" type="button" id="step3btn">
-                  <i class="fa-solid fa-arrow-right"></i>
-                </button>
-              </div>
-              <div class="fill"></div>
-            </div>
-          </fieldset>
-          <!-- Step 4 -->
-          <fieldset id="step4">
-            <!-- Options -->
-            <div class="d-flex flex-wrap options">
-              <div class="option animate">
-                <input type="radio" name="op4" value="Very Disappointed" />
-                <label>Very Disappointed</label>
-              </div>
-              <div class="option animate delay-100">
-                <input type="radio" name="op4" value="Somewhat Disappointed" />
-                <label>Somewhat Disappointed</label>
-              </div>
-              <div class="option animate delay-200">
-                <input type="radio" name="op4" value="Not Disappointed" />
-                <label>Not Disappointed</label>
-              </div>
-              <div class="option animate delay-300">
-                <input type="radio" name="op4" value="Support" />
-                <label>Support</label>
-              </div>
-            </div>
-
-            <!-- Question -->
-            <div class="question">
-              <h1>Would you Feel if you Could No Longer use Product?</h1>
-
-              <!-- Next Prev -->
-              <div class="nextPrev">
-                <button class="prev" type="button">
-                  <i class="fa-solid fa-arrow-left"></i>
-                </button>
-                <button class="apply" type="button" id="sub">
-                  <i class="fa-solid fa-arrow-right"></i>
-                </button>
-              </div>
-              <div class="fill"></div>
-            </div>
-          </fieldset>
-        </form>
-      </section>
-    </main>
-
-    <!-- result -->
-    <div class="loadingresult">
-      <img src="{% static 'assets/images/loading.gif' %}" alt="loading" />
-    </div>
-    <div class="result_page">
-      <div class="container">
-        <div class="result_inner">
-          <!-- header -->
-          <header class="resultheader">
-            Your Result is there
-            <div class="h-border"></div>
-          </header>
-
-          <div class="result_content">
-            <div class="result_msg">
-              <img src="{% static 'assets/images/check.png' %}" alt="check" />
-              Wow! You are Brilliant!
-            </div>
-            <span>your overall score</span>
-            <div class="u_prcnt">70%</div>
-            <div class="prcnt_bar">
-              <div class="fill"></div>
-            </div>
-            <div class="prcnt_bar_lvl">Medium</div>
-            <div class="lvl_overview">
-              <div class="lvl-single">
-                <div class="lvl-color low"></div>
-                <div class="lvl-name">Low</div>
-                <div class="lvl-line"></div>
-              </div>
-              <div class="lvl-single">
-                <div class="lvl-color medium"></div>
-                <div class="lvl-name">Medium</div>
-                <div class="lvl-line"></div>
-              </div>
-              <div class="lvl-single">
-                <div class="lvl-color high"></div>
-                <div class="lvl-name">High</div>
-              </div>
-            </div>
-          </div>
-
-          <footer class="resultfooter"></footer>
-        </div>
-      </div>
-    </div>
-
-    <div id="error"></div>
-    
 {% endblock %}

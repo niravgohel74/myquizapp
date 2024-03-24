@@ -16,7 +16,7 @@ gender_choices={
 
 class UserProfile(models.Model):
     Master = models.ForeignKey(Master, on_delete = models.CASCADE)
-    ProfileImage = models.FileField(upload_to='profile_images/', default='avatar.png')
+    ProfileImage = models.FileField(upload_to='profile_images/', default='user.png')
     FullName = models.CharField(max_length=25, null=True, default='')
     Mobile = models.CharField(max_length=10, null=True, default='')
     Gender = models.CharField(choices=gender_choices, max_length=2, default='')
@@ -51,8 +51,8 @@ difficulty_level_choices=(
 
 class Quiz(models.Model):
     UserProfile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    category = models.ForeignKey(QuizCategory, on_delete=models.CASCADE)
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    Category = models.ForeignKey(QuizCategory, on_delete=models.CASCADE)
+    Subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
 
     Title = models.CharField(max_length=100)
     Duration = models.IntegerField(default = 0)
@@ -64,7 +64,7 @@ class Quiz(models.Model):
 
 class QuesAns(models.Model):
     Quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
-    QuesImage = models.FileField(upload_to='ques_images/', default='avtar.png')
+    QuesImage = models.FileField(upload_to='ques_images/', default='avatar.png')
 
     Question = models.TextField(max_length=2500)
     Options = models.TextField(max_length=2500)

@@ -2,15 +2,65 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz Result</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom Styles */
+        body {
+            background-color: #f8f9fa;
+        }
+        .quiz-result {
+            color: #DD2F6E;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .result-info {
+            background-color: #ffffff;
+            border: 2px solid #DD2F6E;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 30px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .result-info p {
+            margin-bottom: 10px;
+        }
+        .btn-back {
+            background-color: #DD2F6E;
+            border-color: #DD2F6E;
+            color: #ffffff;
+            margin-left: 45%; 
+        }
+        .btn-back:hover {
+            background-color: #ca1d59;
+            border-color: #ca1d59;
+            color: #ffffff
+        }
+        .result-info p {
+            margin-bottom: 10px;
+        }
+        .result-info p span {
+            font-weight: bold;
+            color: #DD2F6E;
+        }
+    </style>
 </head>
 <body>
-    <h1>Quiz Result</h1>
+    <div class="container">
+        <h1 class="quiz-result">Quiz Result</h1>
 
-    <p>Quiz: {{ quiz.Title }}</p>
-    <p>Score: {{ score }} out of {{ total_questions }}</p>
-    <p>Percentage: {{ percentage }}%</p>
-    <p>Remark: {{ remark_level }}</p>
+        <div class="result-info">
+            <p><span>Quiz:</span> {{ quiz.Title }}</p>
+            <p><span>Score:</span> {{ score }} out of {{ total_questions }}</p>
+            <p><span>Percentage:</span> {{ percentage }}%</p>
+            <p><span>Remark:</span> {{ remark_level }}</p>
+        </div>
 
+        <button class="btn btn-back mt-3" onclick="window.history.back()">Back to Quiz</button>
+    </div>
 </body>
 </html>

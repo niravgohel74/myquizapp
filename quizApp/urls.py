@@ -16,8 +16,8 @@ urlpatterns = [
     path("change_password/", change_password, name="change_password"),
     path("add_options/<int:id>/", add_options, name="add_options"),
     path("fetch_questions/<int:id>/", fetch_questions, name="fetch_questions"),
-
-
+    path("create_quiz/", create_quiz, name="create_quiz"),
+    
     path("quiz_play", quiz_play, name="quiz_play"),
     path("play_quiz/<int:id>/", play_quiz, name="play_quiz"),
     path("quiz_pay_result/", quiz_play_result, name="quiz_pay_result"),

@@ -10,7 +10,7 @@
                             <div class="col-xl-12">
                                 <div class="auth-form">
 									<div class="text-center mb-3">
-										<a href="index-2.html"><img src="{% static 'quiz_manage/images/logo-full.png' %}" alt=""></a>
+										<a href="index-2.html"><img src="{% static 'quiz_manage/images/profile.png' %}" alt="" style="width: 75px; height: 75px;"></a>
 									</div>
                                     <h4 class="text-center mb-4">Sign in your account</h4>
                                     <form method="post" action="{% url 'login' %}">
@@ -23,25 +23,18 @@
                                             <label class="mb-1"><strong>Password</strong></label>
 											<input type="password" name="password" id="dz-password" class="form-control" value="">
 											<span class="show-pass eye">
-											
 												<i class="fa fa-eye-slash"></i>
 												<i class="fa fa-eye"></i>
-											
 											</span>
                                         </div>
                                         <div class="form-row d-flex justify-content-between mt-4 mb-2">
-                                            <div class="form-group">
-                                               <div class="form-check custom-checkbox ms-1">
-													<input type="checkbox" class="form-check-input" id="basic_checkbox_1">
-													<label class="custom-control-label" for="basic_checkbox_1">Remember my preference</label>
-												</div>
-                                            </div>
+                                            
                                             <div class="form-group">
                                                 <a href="{% url 'forgot_pwd' %}">Forgot Password?</a>
                                             </div>
                                         </div>
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-primary btn-block">Sign Me In</button>
+                                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
                                         </div>
                                     </form>
                                     <div class="new-account mt-3">

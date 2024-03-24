@@ -222,7 +222,7 @@ def change_password(request):
     master = Master.objects.get(Email=request.session["email"])
     if master.Password == request.POST["current_pwd"]:
         if request.POST["new_pwd"] == request.POST["rewrite_pwd"]:
-            master.password = request.POST["new_pwd"]
+            master.Password = request.POST["new_pwd"]
             master.save()
             print("Password has been changed.")
         else:
@@ -242,14 +242,16 @@ def create_quiz(request):
     category = QuizCategory.objects.get(pk=int(request.POST["category"]))
 
     Quiz.objects.create(
-        UserProfile=user,
-        Category=category,
-        Subject=subject,
-        Title=request.POST["title"],
-        Duration=request.POST["duration"],
-        DifficultyLevel=request.post["difficulty_level"],
-        TotalScore=request.POST["total_score"],
+        UserProfile = user,
+        Category = category,
+        Subject = subject,
+        Title = request.POST['quiz_title'],
+        Duration = request.POST['duration'],
+        DifficultyLevel = request.POST['difficulty_level'],
+        TotalScore = request.POST['total_score'],
     )
+    return redirect(profile_page)
+
 
 
 # ADD OPTIONS

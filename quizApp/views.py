@@ -5,6 +5,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from random import randint
 from django.db import IntegrityError
+from django.contrib import messages 
 
 # Create your views here.
 default_data = {}
@@ -40,12 +41,13 @@ def verify_otp(request):
             Password=request.session["reg_data"]["pwd"],
         )
         UserProfile.objects.create(Master=master)
-        print("Account Created Successfully")
+        # print("Account Created Successfully")
+        messages.success(request, 'Account Created Successfully')
         return redirect(login_page)
     else:
-        print("Invalid OTP.")
-
-    return redirect(otp_page_link)
+        # print("Invalid OTP.")
+        messages.error(request, 'Invalid OTP.')
+        
 
 
 ### START: VIEWS FOR PAGES ONLY ###
@@ -93,10 +95,14 @@ def forgot_pwd(request):
 def registration(request):
     try:
         master = Master.objects.get(Email=request.POST["email"])
-        print("Account Exist. Login")
+        # print("Account Exist. Login")
+        messages.error(request, 'Account Exist. Login')
+        
     except Master.DoesNotExist as err:
         print(err)
-        print("Account Not Found")
+        # print("Account Not Found")
+        messages.error(request, 'Account Not Found')
+        
 
         request.session["reg_data"] = {
             "email": request.POST["email"],
@@ -122,11 +128,14 @@ def login(request):
             # send_otp(request)
             return redirect(profile_page)
         else:
-            print("Incorrect Password")
+            # print("Incorrect Password")
+            messages.error(request, 'Incorrect Password')
+            
 
     except Master.DoesNotExist as err:
-        print("Account Does Not Exist")
-
+        # print("Account Does Not Exist")
+        messages.error(request, 'Account Does Not Exist')
+        
     return redirect(login_page)
 
 
@@ -136,7 +145,7 @@ def login(request):
 ### START: GET_PROFILE_DATA_FUNCTIONALITY ###
 def load_profile(request):
     master = Master.objects.get(Email=request.session["email"])
-    user = UserProfile.objects.get(Master=master)
+    user = UserProfile.objects.get(Master = master)
 
     user.BirthDate = user.BirthDate.strftime("%y-%m-%d")
 
@@ -224,11 +233,14 @@ def change_password(request):
         if request.POST["new_pwd"] == request.POST["rewrite_pwd"]:
             master.Password = request.POST["new_pwd"]
             master.save()
-            print("Password has been changed.")
+            # print("Password has been changed.")
+            messages.success(request, 'Password has been changed.')
         else:
-            print("New Password and Rewrite Password should be same.")
+            # print("New Password and Rewrite Password should be same.")
+            messages.warning(request, 'New Password and Rewrite Password should be same.')
     else:
-        print("Current Password not matched")
+        # print("Current Password not matched")
+        messages.error(request, 'Current Password not matched')
 
     return redirect(profile_page)
 
@@ -301,7 +313,7 @@ def logout(request):
 ## QUIZ PLAY ##
 
 quiz_play_link = "play/quiz_play.html"
-play_result = "quiz_pay_result.html"
+play_result = "quiz_play_result.html"
 
 def quiz_play(request):
     return render(request, quiz_play_link)
@@ -436,3 +448,7 @@ def play_quiz(request, id):
     }
 
     return render(request, 'play/quiz_play.html', context)
+
+
+
+

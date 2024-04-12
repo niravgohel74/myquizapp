@@ -43,7 +43,7 @@
 <div class="container">
   <h1 class="quiz-title">{{ quiz.Title }}</h1>
 
-  <form method="post">
+  <form method="post" action="">
     {% csrf_token %}
 
     {% for question in questions %}
@@ -69,5 +69,9 @@
     <button type="submit" class="btn btn-submit float-end">Submit Answers</button>
   </form>
 </div>
+
+
+
+
 
 {% endblock %}

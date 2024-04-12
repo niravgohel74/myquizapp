@@ -15,6 +15,7 @@
                                     <h4 class="text-center mb-4">Sign in your account</h4>
                                     <form method="post" action="{% url 'verify_otp' %}">
                                         {% csrf_token %}
+                                        {% include 'quiz_manage/alert.html' %}
                                        <div class="form-group position-relative">
                                             <label class="mb-1"><strong>One Time Password</strong></label>
 											<input type="text" name="otp" id="dz-password" class="form-control" value="">

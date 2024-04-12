@@ -20,7 +20,7 @@ urlpatterns = [
     
     path("quiz_play", quiz_play, name="quiz_play"),
     path("play_quiz/<int:id>/", play_quiz, name="play_quiz"),
-    path("quiz_pay_result/", quiz_play_result, name="quiz_pay_result"),
+    path("quiz_play_result/<int:id>/", quiz_play_result, name="quiz_play_result"),
     
     path("logout/", logout, name="logout")
     

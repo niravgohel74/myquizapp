@@ -8,10 +8,10 @@ class Master(models.Model):
     def __str__(self) -> str:
         return self.Email
 
-gender_choices={
-    ('m', 'male'),
-    ('f', 'female')
-}
+gender_choices = (
+    ('m', 'Male'),
+    ('f', 'Female'),
+)
 
 
 class UserProfile(models.Model):
@@ -20,7 +20,7 @@ class UserProfile(models.Model):
     FullName = models.CharField(max_length=25, null=True, default='')
     Mobile = models.CharField(max_length=10, null=True, default='')
     Gender = models.CharField(choices=gender_choices, max_length=2, default='')
-    BirthDate = models.DateField(auto_created=True, default='1990-01-01')
+    BirthDate = models.DateField(default='1990-01-01')
     City = models.CharField(max_length=30, null=True, default='')
     State = models.CharField(max_length=25, null=True, default='')
     Country = models.CharField(max_length=15, null=True, default='')

@@ -241,7 +241,7 @@
 															<div class="row form-material">
 																<div class="col-xl-3 col-xxl-6 col-md-6 mb-3">
 																	<label class="form-label">Birth Date</label>
-																	<input type="text" class="form-control" name="birth_date" placeholder="2017-06-04" id="mdate" value="{{user_profile.BirthDate}}">
+																	<input type="date" class="form-control" name="birth_date" id="mdate" value="{{formatted_birthdate}}">
 																</div>
 															</div>
 															<div class="row">
@@ -251,28 +251,18 @@
 																</div>
 																<div class="mb-3 col-md-4">
 																	<label class="form-label">State</label>
-																	<select class="form-control default-select" name="state" id="inputState" value="{{user_profile.State}}">
-																		<option selected="">Choose...</option>
-																		<option>Gujarat</option>
-																		<option>Uttrakhand</option>
-																		<option>Assam</option>
-																	</select>
+																	<input type="text" class="form-control" name="state" id="inputState" value="{{user_profile.State}}" placeholder="State">
 																</div>
 																<div class="mb-3 col-md-4">
 																	<label class="form-label">Country</label>
-																	<select class="form-control default-select wide" name="country" id="inputCountry" value="{{user_profile.Country}}">
-																		<option selected="">Choose...</option>
-																		<option>India</option>
-																		<option>United Kingdom</option>
-																		<option>Australia</option>
-																	</select>
+																	<input type="text" class="form-control" name="country" id="inputCountry" value="{{user_profile.Country}}" placeholder="Country">
 																</div>
 																<div class="mb-3 col-md-2">
 																	<label class="form-label">Pincode</label>
 																	<input type="text" name="pincode" class="form-control" value="{{user_profile.Pincode}}">
 																</div>
 															</div>
-															<button class="btn btn-primary" type="submit">Signin</button>
+															<button class="btn btn-primary" type="submit">Save Changes</button>
 														</form>
 													</div>
 												</div>
@@ -371,7 +361,7 @@
 													</style>
 													<div class="row">
 														{% for quiz in my_quizes %}
-														<div class="widget-stat card bg-danger col-xl-4 m-2 quiz-item" category="{{quiz.category.category}}">
+														<div class="widget-stat card bg-danger col-xl-4 m-2 quiz-item" category="{{quiz.Category.category}}">
 															<div class="card-body mb-0 pb-0">
 																<div class="media">
 																	<div class="media-body text-white">
@@ -399,19 +389,14 @@
 													<li>
 														<div class="timeline-panel">
 															<div class="media me-2">
-																<img alt="image" width="50" src="images/avatar/1.jpg">
+																<img alt="image" width="50" src="{% static 'quiz_manage/images/avatar/1.jpg' %}">
 															</div>
 															<div class="media-body p-3">
 																<h5 class="mb-1 quiz-item">{{quiz.Title}}</h5>
 																<p class="mb-1" style="width: max-content;">Score: {{quiz.TotalScore}} and Has {{quiz.TotalQuestions}} questions.</p>
-																<!-- <p class="mb-1">I shared this on my fb wall a few months back..</p> -->
 															</div>
 															<div class="">
-																	<!-- <span class="badge light badge-success">Successful</span> -->
-																	<!-- <span class="badge light badge-danger">Canceled</span> -->
-																	<!-- <span class="badge light badge-warning">Pending</span> -->
-																	<!-- <span class="badge light badge-danger">Faield</span> -->
-																	<a class="btn btn-primary btn-sm shadow" href="{% url 'play_quiz' quiz.id %}"** target="_blank">Play</a>
+																	<a class="btn btn-primary btn-sm shadow" href="{% url 'play_quiz' quiz.id %}" target="_blank">Play</a>
 															</div>
 														</div>
 													</li>

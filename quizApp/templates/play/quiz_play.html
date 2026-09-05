@@ -55,10 +55,10 @@
           <h4 class="card-text">{{ question.Question }}</h4>
 
           <div class="form-group">
-            {% for option in question.Options.split %}
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="question_{{ question.id }}" id="option_{{ forloop.counter }}_{{ loop.counter }}" value="{{ option }}" required>
-                <label class="form-check-label" for="option_{{ forloop.counter }}_{{ loop.counter }}">{{ option }}</label>
+            {% for option in question.options_list %}
+              <div class="form-check my-2">
+                <input class="form-check-input" type="radio" name="question_{{ question.id }}" id="opt_{{ question.id }}_{{ forloop.counter }}" value="{{ option }}" required>
+                <label class="form-check-label" for="opt_{{ question.id }}_{{ forloop.counter }}">{{ option }}</label>
               </div>
             {% endfor %}
           </div>

@@ -18,11 +18,12 @@ urlpatterns = [
     path("fetch_questions/<int:id>/", fetch_questions, name="fetch_questions"),
     path("create_quiz/", create_quiz, name="create_quiz"),
     
-    path("quiz_play", quiz_play, name="quiz_play"),
+    path("quiz_play/", quiz_play, name="quiz_play"),
     path("play_quiz/<int:id>/", play_quiz, name="play_quiz"),
+    path("quiz_play_result/", quiz_play_result, name="quiz_play_result_base"),
     path("quiz_play_result/<int:id>/", quiz_play_result, name="quiz_play_result"),
     
-    path("logout/", logout, name="logout")
+    path("logout/", logout, name="logout"),
     
 
 ]

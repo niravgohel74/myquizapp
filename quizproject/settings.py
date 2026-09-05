@@ -10,7 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import os
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +22,24 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-k!35omu+=xa^jm+gek8ade=_h&uxu8@yk=z+is8109dg&=^8t1"
+SECRET_KEY = os.environ.get(
+    "SECRET_KEY", "django-insecure-k!35omu+=xa^jm+gek8ade=_h&uxu8@yk=z+is8109dg&=^8t1"
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "True").lower() in ("true", "1", "yes")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "testserver"]
+RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+ALLOWED_HOSTS.append("*")
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.onrender.com",
+    "http://127.0.0.1:8000",
+    "http://localhost:8000",
+]
 
 
 # Application definition
@@ -42,6 +56,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -75,10 +90,10 @@ WSGI_APPLICATION = "quizproject.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "quiz.db",
-    }
+    "default": dj_database_url.config(
+        default=f"sqlite:///{BASE_DIR / 'quiz.db'}",
+        conn_max_age=600,
+    )
 }
 
 
@@ -117,9 +132,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
-STATIC_ROOT = Path.joinpath(BASE_DIR, 'static')
-# STATICFILES_DIRS = os.path.join(BASE_DIR, 'static')
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 MEDIA_URL = "uploads/"
 MEDIA_ROOT = Path.joinpath(BASE_DIR, "uploads")
@@ -131,12 +145,17 @@ MEDIA_ROOT = Path.joinpath(BASE_DIR, "uploads")
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
  # EMAIL CONFIGURATION
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = '' # app password
+
+# Use console backend for development when credentials are empty
+if not EMAIL_HOST_USER or not EMAIL_HOST_PASSWORD:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 
 
